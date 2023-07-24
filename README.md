@@ -1,5 +1,6 @@
-Following along with https://os.phil-opp.com/
+# A Small Rust Kernel
 
+Following along with https://os.phil-opp.com/
 
 Original: https://github.com/phil-opp/blog_os
 
