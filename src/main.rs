@@ -13,8 +13,12 @@ pub extern "C" fn _start() -> ! {
 
     blogos::init();
 
-    // invoke a breakpoint exception
-    x86_64::instructions::interrupts::int3();
+    fn stack_overflow() {
+        stack_overflow(); // for each recursion, the return address is pushed
+    }
+
+    // trigger a stack overflow
+    //stack_overflow();
 
     #[cfg(test)]
     test_main();
@@ -35,4 +39,9 @@ fn panic(info: &PanicInfo) -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     blogos::test_panic_handler(info)
+}
+
+#[test_case]
+fn trivial_assertion() {
+    assert_eq!(1, 1);
 }
