@@ -13,6 +13,8 @@ pub extern "C" fn _start() -> ! {
 
     blogos::init();
 
+    #[allow(unconditional_recursion)]
+    #[allow(dead_code)]
     fn stack_overflow() {
         stack_overflow(); // for each recursion, the return address is pushed
     }
