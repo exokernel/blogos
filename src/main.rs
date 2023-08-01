@@ -26,7 +26,11 @@ pub extern "C" fn _start() -> ! {
     test_main();
 
     println!("It did not crash!");
-    loop {}
+    loop {
+        use blogos::print;
+        for _ in 0..1000000 {}
+        print!("-");
+    }
 }
 
 /// This function is called on panic.
