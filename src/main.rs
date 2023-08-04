@@ -30,14 +30,16 @@ pub extern "C" fn _start() -> ! {
 }
 
 /// This function is called on panic.
-#[cfg(not(test))]
+// #[cfg(not(test))]
+#[cfg(any(not(test), rust_analyzer))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
     blogos::hlt_loop();
 }
 
-#[cfg(test)]
+//#[cfg(test)]
+#[cfg(all(test, not(rust_analyzer)))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     blogos::test_panic_handler(info)
