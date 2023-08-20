@@ -7,14 +7,14 @@
 extern crate alloc;
 
 use blogos::println;
-use blogos::task::{Task, simple_executor::SimpleExecutor};
+use blogos::task::{keyboard, simple_executor::SimpleExecutor, Task};
 use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 
 entry_point!(kernel_main);
 
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-    use blogos::{memory, allocator};
+    use blogos::{allocator, memory};
     use x86_64::VirtAddr;
 
     println!("Hello World{}", "!");
@@ -29,6 +29,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
     let mut executor = SimpleExecutor::new();
     executor.spawn(Task::new(example_task()));
+    executor.spawn(Task::new(keyboard::print_keypresses()));
     executor.run();
 
     #[cfg(test)]
